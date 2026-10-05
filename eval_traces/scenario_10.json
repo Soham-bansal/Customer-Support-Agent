@@ -1,0 +1,10 @@
+{
+  "id": 10,
+  "name": "Off-topic question",
+  "question": "What is the capital of France?",
+  "approval_pauses": 0,
+  "transcript": [
+    "USER: What is the capital of France?",
+    "AGENT: I can only help with orders, delivery status, and refunds. If you have any questions or need assistance with an order or refund, please let me know!"
+  ]
+}

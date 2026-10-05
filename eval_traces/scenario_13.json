@@ -1,0 +1,16 @@
+{
+  "id": 13,
+  "name": "Ambiguous request with no order ID",
+  "question": "Refund the jacket.",
+  "approval_pauses": 0,
+  "transcript": [
+    "USER: Refund the jacket.",
+    "AGENT REQUESTED TOOL: get_pending_refund_requests({})",
+    "TOOL RESULT: {\n  \"ticket_id\": \"T-01\",\n  \"order_id\": \"O-1001\",\n  \"customer_message\": \"The shirt doesn't fit, please refund.\",\n  \"status\": \"open\"\n}\n{\n  \"ticket_id\": \"T-02\",\n  \"order_id\": \"O-1002\",\n  \"customer_message\": \"My headphones stopped working after a few days.\",\n  \"status\": \"open\"\n}\n{\n  \"ticket_id\": \"T-03\",\n  \"order_id\": \"O-1003\",\n  \"customer_message\": \"I want to return this speaker, I don't like the sound.\",\n  \"status\": \"open\"\n}\n{\n  \"ticket_id\": \"T-04\",\n  \"order_id\": \"O-1004\",\n  \"customer_message\": \"Pl",
+    "AGENT REQUESTED TOOL: get_order({'order_id': 'O-1004'})",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1004\",\n  \"customer_id\": \"C-02\",\n  \"customer_name\": \"Ravi Nair\",\n  \"email\": \"ravi.nair@example.com\",\n  \"category\": \"Clothing\",\n  \"items\": [\n    {\n      \"name\": \"Winter jacket\",\n      \"price\": 1500\n    }\n  ],\n  \"amount_paid\": 1500,\n  \"amount_refunded\": 1500,\n  \"status\": \"delivered\",\n  \"delivered_days_ago\": 25,\n  \"refunded_days_ago\": 10,\n  \"tracking\": \"Delivered to doorstep\"\n}",
+    "AGENT REQUESTED TOOL: check_refund_eligibility({'order_id': 'O-1004'})",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1004\",\n  \"refundable_amount\": 0,\n  \"days_since_delivery\": 25,\n  \"window_days\": 30,\n  \"recent_refunds_90d\": 1,\n  \"decision\": \"not_eligible\",\n  \"reason\": \"Order was already fully refunded\"\n}",
+    "AGENT: Order O-1004 (Winter jacket) is **not eligible** for a refund because it was already fully refunded (₹1,500) 10 days ago. \n\n**Summary:**\n- **Order ID:** O-1004\n- **Item:** Winter jacket\n- **Amount Paid:** ₹1,500\n- **Amount Already Refunded:** ₹1,500\n- **Decision:** Not eligible (already fully refunded)"
+  ]
+}

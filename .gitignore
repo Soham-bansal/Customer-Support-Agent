@@ -1,0 +1,8 @@
+.env
+venv/
+agent_env/
+__pycache__/
+*.pyc
+checkpoints.db*
+audit_log.json
+data/flagged_cases.json

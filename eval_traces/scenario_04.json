@@ -1,0 +1,15 @@
+{
+  "id": 4,
+  "name": "Auto-approved refund (under 500 rupees)",
+  "question": "Refund O-1001, the shirt doesn't fit.",
+  "approval_pauses": 0,
+  "transcript": [
+    "USER: Refund O-1001, the shirt doesn't fit.",
+    "AGENT REQUESTED TOOL: get_order({'order_id': 'O-1001'}), check_refund_eligibility({'order_id': 'O-1001'})",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1001\",\n  \"customer_id\": \"C-01\",\n  \"customer_name\": \"Asha Verma\",\n  \"email\": \"asha.verma@example.com\",\n  \"category\": \"Clothing\",\n  \"items\": [\n    {\n      \"name\": \"Cotton shirt\",\n      \"price\": 400\n    }\n  ],\n  \"amount_paid\": 400,\n  \"amount_refunded\": 0,\n  \"status\": \"delivered\",\n  \"delivered_days_ago\": 5,\n  \"refunded_days_ago\": null,\n  \"tracking\": \"Delivered to doorstep\"\n}",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1001\",\n  \"refundable_amount\": 400,\n  \"days_since_delivery\": 5,\n  \"window_days\": 30,\n  \"recent_refunds_90d\": 0,\n  \"decision\": \"eligible\",\n  \"reason\": \"Within the return window\"\n}",
+    "AGENT REQUESTED TOOL: issue_refund({'order_id': 'O-1001', 'amount': 400, 'reason': \"The shirt doesn't fit\"})",
+    "TOOL RESULT: {\"status\": \"refunded\", \"order_id\": \"O-1001\", \"amount\": 400.0, \"reason\": \"The shirt doesn't fit\", \"verified\": true}",
+    "AGENT: I have successfully issued a full refund of ₹400 for order O-1001 (Cotton shirt).\n\n**Summary:**\n- **Order ID:** O-1001\n- **Customer:** Asha Verma\n- **Item:** Cotton shirt (₹400)\n- **Eligibility:** Eligible (delivered 5 days ago, within the 30-day return window)\n- **Action Taken:** Full refund of ₹400 issued."
+  ]
+}

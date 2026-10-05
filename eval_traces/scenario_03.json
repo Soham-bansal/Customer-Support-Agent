@@ -1,0 +1,12 @@
+{
+  "id": 3,
+  "name": "Unknown order ID",
+  "question": "What is the status of order O-9999?",
+  "approval_pauses": 0,
+  "transcript": [
+    "USER: What is the status of order O-9999?",
+    "AGENT REQUESTED TOOL: get_order({'order_id': 'O-9999'})",
+    "TOOL RESULT: {\"status\": 400, \"error\": \"Order O-9999 does not exist.\"}",
+    "AGENT: Order O-9999 does not exist. Please check the order ID and try again."
+  ]
+}

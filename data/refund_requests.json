@@ -1,0 +1,68 @@
+[
+    {
+        "ticket_id": "T-01",
+        "order_id": "O-1001",
+        "customer_message": "The shirt doesn't fit, please refund.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-02",
+        "order_id": "O-1002",
+        "customer_message": "My headphones stopped working after a few days.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-03",
+        "order_id": "O-1003",
+        "customer_message": "I want to return this speaker, I don't like the sound.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-04",
+        "order_id": "O-1004",
+        "customer_message": "Please refund the jacket.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-05",
+        "order_id": "O-1005",
+        "customer_message": "I cancelled this order but was charged. Refund please.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-06",
+        "order_id": "O-1006",
+        "customer_message": "I haven't received my order, I want my money back.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-07",
+        "order_id": "O-1007",
+        "customer_message": "The laptop screen arrived cracked.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-08",
+        "order_id": "O-1008",
+        "customer_message": "The desk lamp is damaged, I want a refund for that item only.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-09",
+        "order_id": "O-1009",
+        "customer_message": "Refund please, jeans are the wrong size.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-10",
+        "order_id": "order 1010",
+        "customer_message": "Refund for order 1010 please, wrong colour.",
+        "status": "open"
+    },
+    {
+        "ticket_id": "T-11",
+        "order_id": "O-1011",
+        "customer_message": "The tablet is slow and glitchy, I want to return it.",
+        "status": "open"
+    }
+]

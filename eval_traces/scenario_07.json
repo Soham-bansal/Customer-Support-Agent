@@ -1,0 +1,17 @@
+{
+  "id": 7,
+  "name": "Large refund approved (over 5000 rupees)",
+  "question": "Refund O-1007 in full, the laptop screen arrived cracked.",
+  "approval_pauses": 1,
+  "transcript": [
+    "USER: Refund O-1007 in full, the laptop screen arrived cracked.",
+    "AGENT REQUESTED TOOL: get_order({'order_id': 'O-1007'})",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1007\",\n  \"customer_id\": \"C-04\",\n  \"customer_name\": \"Kabir Rao\",\n  \"email\": \"kabir.rao@example.com\",\n  \"category\": \"Electronics\",\n  \"items\": [\n    {\n      \"name\": \"Laptop\",\n      \"price\": 8000\n    }\n  ],\n  \"amount_paid\": 8000,\n  \"amount_refunded\": 0,\n  \"status\": \"delivered\",\n  \"delivered_days_ago\": 9,\n  \"refunded_days_ago\": null,\n  \"tracking\": \"Delivered, signed by customer\"\n}",
+    "AGENT REQUESTED TOOL: check_refund_eligibility({'order_id': 'O-1007'})",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1007\",\n  \"refundable_amount\": 8000,\n  \"days_since_delivery\": 9,\n  \"window_days\": 15,\n  \"recent_refunds_90d\": 0,\n  \"decision\": \"eligible\",\n  \"reason\": \"Within the return window\"\n}",
+    "AGENT REQUESTED TOOL: issue_refund({'order_id': 'O-1007', 'amount': 8000, 'reason': 'Laptop screen arrived cracked'})",
+    "HUMAN APPROVAL REQUESTED: refund of Rs 8000 on O-1007 (Refund of ₹8000 is ₹500 or more). HUMAN ANSWERED: approve ",
+    "TOOL RESULT: {\"status\": \"refunded\", \"order_id\": \"O-1007\", \"amount\": 8000.0, \"reason\": \"Laptop screen arrived cracked\", \"verified\": true}",
+    "AGENT: **Summary of Action:**\n- **Order ID:** O-1007 (Laptop, Electronics)\n- **Amount Paid:** ₹8,000\n- **Status:** Fully refunded (₹8,000)\n- **Reason:** Laptop screen arrived cracked. The order was verified as eligible (delivered 9 days ago, within the 15-day return window)."
+  ]
+}

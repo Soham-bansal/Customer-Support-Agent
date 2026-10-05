@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Normal lookup",
+    "approval_pauses": 0,
+    "error_encountered": false,
+    "score": 5,
+    "reason": "The agent successfully looked up the order using the correct tool and provided an accurate, concise response matching the expected outcome."
+  },
+  {
+    "id": 2,
+    "name": "Wrong order ID format",
+    "approval_pauses": 0,
+    "error_encountered": true,
+    "score": 5,
+    "reason": "The agent encountered a 400 error due to an invalid order ID format, successfully recognized the correct format ('O-1002'), retried with the correct ID, and provided an accurate final answer."
+  },
+  {
+    "id": 3,
+    "name": "Unknown order ID",
+    "approval_pauses": 0,
+    "error_encountered": true,
+    "score": 5,
+    "reason": "The tool returned an error (400), which the agent correctly identified and handled by honestly explaining to the user without making up data or looping."
+  },
+  {
+    "id": 4,
+    "name": "Auto-approved refund (under 500 rupees)",
+    "approval_pauses": 0,
+    "error_encountered": false,
+    "score": 5,
+    "reason": "No errors occurred; the agent correctly checked the order and eligibility, issued the refund automatically since it was under the threshold, and accurately reported the success."
+  },
+  {
+    "id": 5,
+    "name": "Refund approved by human",
+    "approval_pauses": 1,
+    "error_encountered": false,
+    "score": 5,
+    "reason": "The agent correctly checked order details, eligibility, requested human approval for a refund over 500 rupees, and successfully issued and verified the refund upon approval."
+  },
+  {
+    "id": 6,
+    "name": "Refund rejected by human",
+    "approval_pauses": 1,
+    "error_encountered": true,
+    "score": 5,
+    "reason": "The refund was rejected by the human reviewer, and the agent correctly handled the error by stating no refund was issued, sharing the reviewer's note, and offering the requested options without retrying."
+  },
+  {
+    "id": 7,
+    "name": "Large refund approved (over 5000 rupees)",
+    "approval_pauses": 1,
+    "error_encountered": true,
+    "score": 5,
+    "reason": "An error/approval block was encountered because the refund exceeded 5000 rupees. The agent correctly requested human approval, received it, issued the refund, and reported the successful outcome accurately."
+  },
+  {
+    "id": 8,
+    "name": "Duplicate refund attempt",
+    "approval_pauses": 0,
+    "error_encountered": false,
+    "score": 5,
+    "reason": "The agent correctly identified that the order was already fully refunded and explained this clearly to the user without making any unauthorized or redundant moves."
+  },
+  {
+    "id": 9,
+    "name": "Customer with many recent refunds",
+    "approval_pauses": 0,
+    "error_encountered": true,
+    "score": 5,
+    "reason": "An error/flag condition occurred due to the customer's recent refund history. The agent handled it correctly by identifying the flag, refusing automatic refund, and offering to flag for manual review per policy."
+  },
+  {
+    "id": 10,
+    "name": "Off-topic question",
+    "approval_pauses": 0,
+    "error_encountered": false,
+    "score": 5,
+    "reason": "The agent correctly identified the off-topic question, politely refused, offered relevant assistance, and used no tools, perfectly matching the expected outcome."
+  }
+]

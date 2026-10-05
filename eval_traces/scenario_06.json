@@ -1,0 +1,17 @@
+{
+  "id": 6,
+  "name": "Refund rejected by human",
+  "question": "Refund O-1002 in full, the headphones stopped working.",
+  "approval_pauses": 1,
+  "transcript": [
+    "USER: Refund O-1002 in full, the headphones stopped working.",
+    "AGENT REQUESTED TOOL: get_order({'order_id': 'O-1002'})",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1002\",\n  \"customer_id\": \"C-01\",\n  \"customer_name\": \"Asha Verma\",\n  \"email\": \"asha.verma@example.com\",\n  \"category\": \"Electronics\",\n  \"items\": [\n    {\n      \"name\": \"Wireless headphones\",\n      \"price\": 2000\n    }\n  ],\n  \"amount_paid\": 2000,\n  \"amount_refunded\": 0,\n  \"status\": \"delivered\",\n  \"delivered_days_ago\": 5,\n  \"refunded_days_ago\": null,\n  \"tracking\": \"Delivered to doorstep\"\n}",
+    "AGENT REQUESTED TOOL: check_refund_eligibility({'order_id': 'O-1002'})",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1002\",\n  \"refundable_amount\": 2000,\n  \"days_since_delivery\": 5,\n  \"window_days\": 15,\n  \"recent_refunds_90d\": 0,\n  \"decision\": \"eligible\",\n  \"reason\": \"Within the return window\"\n}",
+    "AGENT REQUESTED TOOL: issue_refund({'amount': 2000, 'order_id': 'O-1002', 'reason': 'Headphones stopped working'})",
+    "HUMAN APPROVAL REQUESTED: refund of Rs 2000 on O-1002 (Refund of ₹2000 is ₹500 or more). HUMAN ANSWERED: reject Customer has abused refunds before",
+    "TOOL RESULT: {\"status\": \"rejected_by_human\", \"refund_issued\": false, \"note\": \"Customer has abused refunds before\", \"message\": \"The human reviewer rejected this refund. No money was moved. The refund status is known: NOT refunded. Do not retry it and do not flag it.\"}",
+    "AGENT: The human reviewer rejected this refund. No money was moved, and the refund status is known: NOT refunded. \n\nReviewer's note: \"Customer has abused refunds before\"\n\nSince the refund was rejected by human review, no refund was issued. Please choose how you would like to proceed:\n1. Issue a smaller partial refund\n2. Send a polite decline email to the customer\n3. Flag the order for review"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "name": "Normal lookup",
+  "question": "Where is order O-1006?",
+  "approval_pauses": 0,
+  "transcript": [
+    "USER: Where is order O-1006?",
+    "AGENT REQUESTED TOOL: get_tracking({'order_id': 'O-1006'})",
+    "TOOL RESULT: {\n  \"order_id\": \"O-1006\",\n  \"status\": \"shipped\",\n  \"tracking\": \"In transit, expected in 2 days\"\n}",
+    "AGENT: Order O-1006 has been shipped and is currently in transit, with delivery expected in 2 days."
+  ]
+}
