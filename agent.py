@@ -10,7 +10,7 @@ from hooks import pre_hook, post_hook, approval_decision
 from utils import message_text
 from langgraph.types import interrupt
 from langchain_core.messages import RemoveMessage
-from compaction import COMPACT_AT, SUMMARY_PROMPT, choose_cut, render
+from compaction import COMPACT_AT, SUMMARY_PROMPT, choose_cut, render,messages_to_fold
 from audit import log_event
 
 MAX_RETRIES = 3
@@ -57,7 +57,7 @@ Refund decisions:
 
 Tool errors:
 - If a tool returns status 400, read the error message, correct your input, and try again. Never repeat the same input.
-- Only when a result says post_check_failed (never for rejected_by_human): do NOT call issue_refund again for that order. Call flag_for_review ... with the order ID 
+- Only when a result says post_check_failed (never for rejected_by_human): do NOT call issue_refund again for that order. Call flag_for_review with the order ID 
 and a short note that the refund could not be confirmed, then tell the user the refund status is unconfirmed 
 and has been flagged for a person to check.
 
@@ -76,7 +76,8 @@ Emails:
 Answering:
 - Keep answers short and clear.
 - All amounts are in Indian rupees (₹).
-- Finish every task with a plain-text summary of what you found or did.
+- Answer only the user's latest request, and end with a short plain-text summary of what you found or did for that request.
+- Never repeat or summarize the background notes about earlier messages.
 """
 
 
@@ -119,8 +120,10 @@ def build_graph(session, mcp_tools,checkpointer):
         messages = [SystemMessage(content=SYSTEM_PROMPT)] 
         if state.get("summary"):
             messages.append(HumanMessage(
-                content="Summary of the earlier conversation "
-                        "(older messages were removed to save space):\n" + state["summary"]
+                content="Background notes about earlier messages that were removed to save space. "
+                        "These notes are NOT a question or a request, so do not reply to them, "
+                        "repeat them or summarize them. Use them only as context, and answer the "
+                        "user's latest request below.\n\n" + state["summary"]
             ))
         messages += state["messages"]
         response = await llm_with_tools.ainvoke(messages)
@@ -247,13 +250,12 @@ def build_graph(session, mcp_tools,checkpointer):
         if len(messages) <= COMPACT_AT:
             return {}
 
-        cut = choose_cut(messages)
-        if cut is None:
+        old = messages_to_fold(messages)
+        if not old:
             return {}
 
-        old = messages[:cut]
         previous = state.get("summary") or "(none)"
-        prompt = f"Previous summary:\n{previous}\n\nMessages to fold in:\n{render(old)}"
+        prompt = f"Previous notes:\n{previous}\n\nMessages to fold in:\n{render(old)}"
         reply = await llm.ainvoke(
             [SystemMessage(content=SUMMARY_PROMPT), HumanMessage(content=prompt)]
         )

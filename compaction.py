@@ -1,13 +1,14 @@
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from utils import message_text
 
-COMPACT_AT = 10        # compact when there are more than this many messages
-SUMMARIZE_FIRST = 8   # how many of the oldest messages to fold into the summary
+COMPACT_AT = 6        # compact when there are more than this many messages
+SUMMARIZE_FIRST = 4    # how many of the oldest messages to fold into the summary
 
-SUMMARY_PROMPT = """You are compressing the history of a refund support conversation so the work can continue.
-Write one short paragraph. Keep: order IDs, customer IDs, amounts in rupees, eligibility decisions, refunds issued or rejected (with the reviewer's note), orders flagged, emails sent, and anything the user still expects.
-Drop greetings and raw data fields that no longer matter.
-Do not invent anything. Only state facts that appear in the messages. Do not mention missing information or what the user might need next."""
+
+SUMMARY_PROMPT = """You are writing background notes about an earlier part of a customer support conversation, so the work can continue.
+Write one short paragraph of facts. Keep: order IDs, customer IDs, amounts in rupees, eligibility decisions, refunds issued (with the reason given), refunds rejected by a person (with the reviewer's note), orders flagged, and emails sent.
+Only state facts that appear in the messages. Do not write questions, instructions or a reply to the user.
+Do not invent anything."""
 
 
 def choose_cut(messages, summarize_first=SUMMARIZE_FIRST):
@@ -18,6 +19,16 @@ def choose_cut(messages, summarize_first=SUMMARIZE_FIRST):
     if cut >= len(messages):
         return None
     return cut
+
+
+def messages_to_fold(messages):
+    """The messages to summarize and remove.
+    The user's latest request is never included, so the model always sees what it must answer."""
+    cut = choose_cut(messages)
+    if cut is None:
+        return []
+    latest = max((i for i, m in enumerate(messages) if isinstance(m, HumanMessage)), default=None)
+    return [m for i, m in enumerate(messages[:cut]) if i != latest]
 
 
 def render(messages):

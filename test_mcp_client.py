@@ -1,23 +1,49 @@
 import asyncio
-import sys
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
-params = StdioServerParameters(command=sys.executable, args=["mcp_server.py"])
+
+params = StdioServerParameters(
+    command="python",
+    args=["mcp_server.py"],
+)
 
 
 async def main():
+
     async with stdio_client(params) as (read, write):
+
         async with ClientSession(read, write) as session:
+
             await session.initialize()
 
-            listed = await session.list_tools()
-            for t in listed.tools:
-                print(t.name, "|", t.description[:60])
-                print("   schema:", t.input_schema)
+            result = await session.list_tools()
 
-            result = await session.call_tool("get_order", {"order_id": "O-1006"})
-            print("\nCall result:", result.content)
+            print("\n")
+            print("=" * 80)
+            print("                 MCP SERVER — AVAILABLE TOOLS")
+            print("=" * 80)
+
+            for i, tool in enumerate(result.tools, 1):
+
+                print(f"\n{i}. {tool.name}")
+
+                print(f"   Purpose: {tool.description}")
+
+                # Get arguments from MCP schema
+                properties = tool.input_schema.get("properties", {})
+
+                if properties:
+                    arguments = ", ".join(properties.keys())
+                    print(f"   Arguments: {arguments}")
+                else:
+                    print("   Arguments: None")
+
+            print("\n")
+            print("=" * 80)
+            print(f"Total Tools: {len(result.tools)}")
+            print("=" * 80)
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -1,5 +1,5 @@
 from langchain_core.messages import HumanMessage
-from agent import graph
+from agent_local import graph
 
 questions = ["What is the capital of France?", "Where is my order O-1006?"]
 
