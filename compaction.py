@@ -10,7 +10,7 @@ Write one short paragraph of facts. Keep: order IDs, customer IDs, amounts in ru
 Only state facts that appear in the messages. Do not write questions, instructions or a reply to the user.
 Do not invent anything."""
 
-
+# ensure tool result and tool request should comme together then error in api
 def choose_cut(messages, summarize_first=SUMMARIZE_FIRST):
     """Index where the kept part starts, or None if it is not safe to compact."""
     cut = summarize_first

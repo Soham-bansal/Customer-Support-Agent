@@ -81,7 +81,7 @@ Answering:
 """
 
 
-
+# mcp server tool exactly as in mcp , function repackages it into format model expects 
 def to_llm_tool(t):
     return {
         "type": "function",
@@ -92,7 +92,7 @@ def to_llm_tool(t):
         },
     }
 
-
+# helper function to decide if we should go to approval or end after reasoning
 def should_continue(state: AgentState):
     last = state["messages"][-1]
     if last.tool_calls:
@@ -104,6 +104,7 @@ def should_continue(state: AgentState):
 def build_graph(session, mcp_tools,checkpointer):
     llm_with_tools = llm.bind_tools([to_llm_tool(t) for t in mcp_tools])
 
+# helper function that call mcp server and get text of blocks and turn it into dict
     async def call_json(name, args):
         result = await session.call_tool(name, args)
         text = "\n".join(b.text for b in result.content if b.type == "text")
@@ -118,6 +119,7 @@ def build_graph(session, mcp_tools,checkpointer):
 
     async def reasoning_node(state: AgentState):
         messages = [SystemMessage(content=SYSTEM_PROMPT)] 
+        # labelling summary as notes
         if state.get("summary"):
             messages.append(HumanMessage(
                 content="Background notes about earlier messages that were removed to save space. "
